@@ -45,24 +45,21 @@ def gen_viya_inputs(feature_dict):
     return '{"inputs" : [' + feature_str + ']}'
 
 #call the ID API and get the results as a python dictionary
-def call_id_api(baseUrl, accessToken, feature_dict,moduleID):
-    #create the response = call_id_api(baseUrl, token, features, moduleID)
-        print(response['outputs'])
-        output_dict = unpack_viya_outputs(response['outputs']) in format viya wants
+def call_id_api(baseUrl, accessToken, feature_dict, moduleID):
+    # create the request in format viya wants
     requestBody = gen_viya_inputs(feature_dict)
 
     # Define the content and accept types for the request header.
     contentType = "application/json"
     acceptType = "application/json"
-    
+
     # Define the request URL.
     masModuleUrl = "/microanalyticScore/modules/" + moduleID
     requestUrl = baseUrl + masModuleUrl + "/steps/execute"
-    
+
     # Execute the decision.
-    print(requestBody)
-    masExecutionResponse = post(requestUrl, contentType,
-     acceptType, accessToken, requestBody)
+    #print(requestBody)
+    masExecutionResponse = post(requestUrl, contentType, acceptType, accessToken, requestBody)
     # Display the response.
     return json.loads(masExecutionResponse.content)
 
